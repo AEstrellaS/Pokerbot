@@ -27,10 +27,10 @@ public class Table {
 	
 	public ArrayList<Card> fixCards(Deck deck) {//Function to fix the cards in the table's hand (used to debug)
 		Card c1 = new Card(3, 2);
-		Card c2 = new Card(0, 1);
-		Card c3 = new Card(0, 2);
-		Card c4 = new Card(0, 1);
-		Card c5 = new Card(1, 2);
+		Card c2 = new Card(1, 13);
+		Card c3 = new Card(1, 2);
+		Card c4 = new Card(2, 3);
+		Card c5 = new Card(1, 1);
 		table.add(c1);
 		table.add(c2);
 		table.add(c3);

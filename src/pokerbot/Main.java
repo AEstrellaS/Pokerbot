@@ -9,6 +9,18 @@ public class Main {
 		Deck deck = new Deck();
 		Player player = new Player("alvaro", 500);
 		Table table = new Table();
+		table.fixCards(deck);
+		player.fixCards();
+		player.printHand();
+		table.printTable();
+		player.handRating(table);
+		
+	}
+	
+	public void procedure() {
+		Deck deck = new Deck();
+		Player player = new Player("alvaro", 500);
+		Table table = new Table();
 		deck.create();
 		deck.shuffle();
 		player.deliverHand(deck);

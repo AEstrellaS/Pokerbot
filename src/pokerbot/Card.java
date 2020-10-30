@@ -11,13 +11,13 @@ public class Card {
     public Card(int suit, int value) {
     	
     	//Determines whether the card is a diamond, heart, club or spade
-        if(suit == 0) {
+        if(suit == 1) {
             suitString = "diamonds";
-        } else if (suit == 1) {
-            suitString = "hearts";
         } else if (suit == 2) {
-            suitString = "clubs";
+            suitString = "hearts";
         } else if (suit == 3) {
+            suitString = "clubs";
+        } else if (suit == 4) {
             suitString = "spades";
         }
         

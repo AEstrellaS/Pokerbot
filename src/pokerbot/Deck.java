@@ -9,7 +9,7 @@ public class Deck {
 	
 	//Function that creates a new non-shuffled deck
 	public void create() {
-		for(int index1 = 0; index1 < 4; index1++) { //Assigns a suit to the card
+		for(int index1 = 1; index1 < 5; index1++) { //Assigns a suit to the card
 			for(int index2 = 1; index2 <= 13; index2++) { //Assigns a value to the card
 				Card newCard = new Card(index1, index2);
 				deck.add(newCard); //Adds the newly created card to the deck
