@@ -6,6 +6,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		fixedProcedure();
+	}
+	
+	public static void fixedProcedure() {
 		Deck deck = new Deck();
 		Player player = new Player("alvaro", 500);
 		Table table = new Table();
@@ -14,10 +18,8 @@ public class Main {
 		player.printHand();
 		table.printTable();
 		player.handRating(table);
-		
 	}
-	
-	public void procedure() {
+	public static void procedure() {
 		Deck deck = new Deck();
 		Player player = new Player("alvaro", 500);
 		Table table = new Table();

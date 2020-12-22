@@ -48,14 +48,18 @@ public class Player {
 	}
 
 	private void highestCard(Table table) {
-		for(int index1 = 0; index1 <= hand.size()-1; index1++) { //Checks for the players highest card
-			for(int index2 = 0; index2 <= table.getHand().size()-1; index2++) { 
-				if(hand.get(index1).getValue() >= table.getHand().get(index2).getValue()) { //Checks if the player's cards are higher than the table's hand
-					if(hand.get(index1).getValue() >= highestCard || hand.get(index1).getValue() == 1) { //If the card in the player's hand is bigger than the table's hand, checks if the card is higher than the current highest Card
+		for(int index1 = 0; index1 < hand.size(); index1++) { //Checks for the players highest card
+			for(int index2 = 0; index2 < table.getHand().size(); index2++) { 
+				if(hand.get(index1).getValue() > table.getHand().get(index2).getValue() || hand.get(index1).getValue() == 1) { //Checks if the player's cards are higher than the table's hand
+					if(hand.get(index1).getValue() == 1) { //If the card in the player's hand is bigger than the table's hand, checks if the card is higher than the current highest Card
+						highestCard = hand.get(index1).getValue();
+					} else if(hand.get(index1).getValue() > highestCard && highestCard != 1) {
 						highestCard = hand.get(index1).getValue();
 					}
 				} else {
-					if(table.getHand().get(index2).getValue() >= highestCard || hand.get(index1).getValue() == 1) { //If the card in the table's hand is bigger than the player's hand, checks if the card is higher than the current highest Card
+					if(table.getHand().get(index2).getValue() == 1) { //If the card in the player's hand is bigger than the table's hand, checks if the card is higher than the current highest Card
+						highestCard = table.getHand().get(index2).getValue();
+					} else if(table.getHand().get(index2).getValue() > highestCard && highestCard != 1) {
 						highestCard = table.getHand().get(index2).getValue();
 					}
 				}
@@ -94,9 +98,9 @@ public class Player {
 				} else { //if the firstPair is empty value of the arrayList at location index1 gets stored
 					firstPair = ptHand.get(index1);
 				}
-			} else if(count == 2) { //If
+			} else if(count == 2) { //Determines if there is a three Of A Kind
 				threeOfAKind = ptHand.get(index1);
-			} else if (count == 3) {
+			} else if (count == 3) { //Determines if there is a four of a kind
 				fourOfAKind = ptHand.get(index1);
 			}
 
@@ -114,48 +118,58 @@ public class Player {
 		ptHand.add(hand.get(0).getSuitValue()); 
 		ptHand.add(hand.get(1).getSuitValue());
 
-		for(int index = 0; index < table.getHand().size(); index++) { 
+		for(int index = 0; index < table.getHand().size(); index++) { //Adds the cards in the table to player-table hand array
 			ptHand.add(table.getHand().get(index).getSuitValue());
 		}
 
-		for(int index1 = 0; index1 < ptHand.size(); index1++) { 
+		for(int index1 = 0; index1 < ptHand.size(); index1++) {  //Tests if there exists cards with the same suit
 			int count = 0;
 			for(int index2 = index1+1; index2 < ptHand.size(); index2++) {
 				if(ptHand.get(index1) == ptHand.get(index2) && ptHand.get(index1) != 0) { 
-					count++;
+					count++; //If there are two cards with the same suit count goes up by one
 				}
 			}
-			if(count == 4) {
+			if(count == 4) { //If there are 5 cards with the same suit all other cards with different suits are set to 0
 				for(int index2 = 0; index2 < ptHand.size(); index2++) {
 					if(ptHand.get(index2) != ptHand.get(index1) ) {
 						ptHand.set(index2, 0);
 					}
 				}
-				
+
 				for(int index2 = 0; index2 < ptHand.size(); index2++) {
 					if(ptHand.get(index2) != 0 ) {
-						if(index2 < 3) {
+						if(index2 < 2) {
 							ptHand.set(index2, hand.get(index2).getValue());
-							System.out.println(ptHand);	
 						} else {
 							ptHand.set(index2, table.getHand().get(index2-2).getValue());
-							System.out.println(ptHand);	
 						}
 					}
 				}
-				
-				Collections.sort(ptHand);
-				Collections.reverse(ptHand);
-				System.out.println(ptHand);	
-				System.out.println(highestCard);
 			}
 		}
-		System.out.println(flush);
+
+		Collections.sort(ptHand); //Arraylist gets sorted from smallest to biggest
+		Collections.reverse(ptHand); //Arraylist gets sorted from biggest to smallest
+
+		//Check for ace
+		for(int index1 = 0; index1 < 3; index1++) { //Check if positions 4,5,6 of the arraylist are equal to 1
+			if(ptHand.get(index1+4) == 1) { //If positions 4,5,6 are equal to 1, the value 1 is placed infront of the arraylist
+				for(int index2 = 3+index1; index2 > 0; index2--) {
+					Collections.swap(ptHand, index2-1, index2);
+				}
+				Collections.swap(ptHand, 0, index1+4);
+			}
+		}
+		ptHand.remove(6);
+		ptHand.remove(5);
+		for(int index1 = 0; index1 < ptHand.size(); index1++) { //Set the found flush into flush
+			flush[index1] = ptHand.get(index1);
+		}
 	}
 
 	public ArrayList<Card> fixCards() { //Function to fix cards into the player's hand (used to debug)
-		Card c1 = new Card(1, 13); // first arg is suit, second arg is card value
-		Card c2 = new Card(1, 3);
+		Card c1 = new Card(2, 11); // first arg is suit, second arg is card value
+		Card c2 = new Card(2, 10);
 		hand.add(c1);
 		hand.add(c2);
 		return hand;
