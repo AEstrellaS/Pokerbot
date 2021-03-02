@@ -26,11 +26,11 @@ public class Table {
 	}
 	
 	public ArrayList<Card> fixCards(Deck deck) {//Function to fix the cards in the table's hand (used to debug)
-		Card c1 = new Card(2, 8);
-		Card c2 = new Card(2, 2);
-		Card c3 = new Card(2, 6);
-		Card c4 = new Card(2, 1);
-		Card c5 = new Card(3, 3);
+		Card c1 = new Card(1, 9);
+		Card c2 = new Card(1, 8);
+		Card c3 = new Card(1, 12);
+		Card c4 = new Card(1, 1);
+		Card c5 = new Card(1, 11);
 		table.add(c1);
 		table.add(c2);
 		table.add(c3);
