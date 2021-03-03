@@ -245,32 +245,16 @@ public class Player {
 					}
 				}
 
-				for(int index2 = 0; index2 < count; index2++) {
+				for(int index2 = 0; index2 < count; index2++) { //Tests if the cards with the same suit are in a straight
 					if(ptHandValue.get(index2+1) == ptHandValue.get(index2)+1 && ptHandValue.get(index2+2) == ptHandValue.get(index2)+2 && ptHandValue.get(index2+3) == ptHandValue.get(index2)+3 && ptHandValue.get(index2+4) == ptHandValue.get(index2)+4) {
-						straight = ptHandValue.get(index2+4);
-						straightFlush = true;
+						straight = ptHandValue.get(index2+4); //if cards are in a straight, the biggest value is set to variable straight
+						straightFlush = true; //If cards are in a straight, variable straightFlush is set to true.
+					} else if(ptHandValue.get(index2) == 1 && ptHandValue.get(index2+1) == 10 && ptHandValue.get(index2+2) == 11 && ptHandValue.get(index2+3) == 12 && ptHandValue.get(index2+4) == 13) {
+						royalFlush = true;
 					}
 				}
 			}
 		}
-		/*
-		for(int index1 = 0; index1 < 7; index1++) { //Orders cards from lowest value to highest value, along with the suit in a separate arrayList
-			for(int index2 = 0; index2 <6; index2++) {
-				if(ptHandValue.get(index2) >= ptHandValue.get(index2+1)) {
-					Collections.swap(ptHandValue, index2, index2+1);
-					Collections.swap(ptHandSuit, index2, index2+1);
-				}
-			}
-		}
-		*/
-		
-		//System.out.println(ptHandValue);
-		//System.out.println(ptHandSuit);
-
-		
-
-		System.out.println(straight);
-		System.out.println(straightFlush);
 	}
 
 	public void royalFlushChecks(Table table) {
