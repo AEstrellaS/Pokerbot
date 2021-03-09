@@ -8,18 +8,22 @@ import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.hooks.*;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
+
 
 public class Main extends ListenerAdapter {
 	
-	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.kBo08V_4EO3JRCqDn2JDfbPHmYs";
+	static String token = "N/a";
     public int games = 0;
     public static String gameMessageId = "";
     private boolean flag = false;
     
 	public static void main(String[] args) throws LoginException {
 		// TODO Auto-generated method stub
-		JDABuilder builder = new JDABuilder(AccountType.BOT);
+		JDABuilder builder = JDABuilder.createDefault(token);
+		builder.enableIntents(GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGES);
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB);
         builder.setActivity(Activity.playing("!host"));
         builder.setToken(token);
@@ -29,6 +33,17 @@ public class Main extends ListenerAdapter {
         builder.build();
         
 		fixedProcedure();
+	}
+	
+	@Override
+	public void onMessageReceived(MessageReceivedEvent event) {
+		System.out.println(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentRaw());
+        String message = event.getMessage().getContentRaw();
+        String words[] = message.split("\\s+");
+
+        for (int i = 0; i < words.length; i++) {
+            System.out.println(words[i]);
+        }
 	}
 	
 	public static void fixedProcedure() {
