@@ -12,6 +12,7 @@ public class ReactionListener extends ListenerAdapter{
 				boolean flag = false;
 				for(int index = 0; index < 8; index++) {
 					if(event.getMember().getUser().getId().equals(Main.playingUsers[index].getUUID())) { //Tests if the player is already in the game
+						RemoveReactionListener.isBot = true;
 						event.getReaction().removeReaction(event.getMember().getUser()).queue(); //If the player is already in the game, the reaction gets removed
 						flag = true;
 					}

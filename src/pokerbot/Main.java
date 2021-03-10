@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class Main extends ListenerAdapter {
 	
-	static String token = "N/a";
+	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.i4xkIJBuvzuY5RxGxL8enP2equo";
     public int games = 0;
     public static String gameMessageId = "";
     public static Player[] playingUsers = new Player[8];
