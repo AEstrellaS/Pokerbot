@@ -5,7 +5,7 @@ import java.util.*;
 public class Player {
 
 	//Declaration of instance variables
-	private final String user; //When changing program to discord change this to object type 'User'
+	private String UUID; //When changing program to discord change this to object type 'User'
 	private ArrayList<Card> hand = new ArrayList<Card>(); //Player hand, only 2 cards
 
 	private int chips;
@@ -25,8 +25,8 @@ public class Player {
 	private boolean royalFlush = false;
 
 	//Constructor, sets user and initial chips
-	public Player(String user, int chips) {
-		this.user = user;
+	public Player(String UUID, int chips) {
+		this.UUID = UUID;
 		this.chips = chips;
 	}
 
@@ -309,5 +309,13 @@ public class Player {
 
 	public int getHighestCard() { //Function to return the highest card
 		return highestCard;
+	}
+	
+	public String getUUID() {
+		return UUID;
+	}
+	
+	public void setUUID(String UUID) {
+		this.UUID = UUID;
 	}
 }

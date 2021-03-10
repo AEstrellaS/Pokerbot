@@ -7,6 +7,7 @@ public class Table {
 	//Declaration of instance variables
 	private int pot;
 	private ArrayList<Card> table = new ArrayList<Card>();
+    
 	
 	public ArrayList<Card> deliverFlop(Deck deck) { //Function to deliver the flop (the first 3 cards)
 		table.add(deck.deliverCard());
