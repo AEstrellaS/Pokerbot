@@ -2,10 +2,12 @@ package pokerbot;
 
 import java.util.*;
 
+import net.dv8tion.jda.api.entities.User;
+
 public class Player {
 
 	//Declaration of instance variables
-	private String UUID; //When changing program to discord change this to object type 'User'
+	private User user; //When changing program to discord change this to object type 'User'
 	private ArrayList<Card> hand = new ArrayList<Card>(); //Player hand, only 2 cards
 
 	private int chips;
@@ -25,8 +27,8 @@ public class Player {
 	private boolean royalFlush = false;
 
 	//Constructor, sets user and initial chips
-	public Player(String UUID, int chips) {
-		this.UUID = UUID;
+	public Player(User user, int chips) {
+		this.user = user;
 		this.chips = chips;
 	}
 
@@ -311,11 +313,11 @@ public class Player {
 		return highestCard;
 	}
 	
-	public String getUUID() {
-		return UUID;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setUUID(String UUID) {
-		this.UUID = UUID;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

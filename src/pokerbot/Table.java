@@ -2,11 +2,14 @@ package pokerbot;
 
 import java.util.*;
 
+import net.dv8tion.jda.api.entities.User;
+
 public class Table {
 	
 	//Declaration of instance variables
 	private int pot;
 	private ArrayList<Card> table = new ArrayList<Card>();
+	private ArrayList<User> playingUsers = new ArrayList<User>();
     
 	
 	public ArrayList<Card> deliverFlop(Deck deck) { //Function to deliver the flop (the first 3 cards)
@@ -50,6 +53,9 @@ public class Table {
 		System.out.println(table);
 	}
 	
+	public ArrayList<User> getPlayingUsers() {
+		return playingUsers;
+	}
 	public ArrayList<Card> getHand() { //Function that returns the table's hand
 		return table;
 	}
