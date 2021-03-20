@@ -19,7 +19,7 @@ public class ReactionListener extends ListenerAdapter{
 				}
 
 				if(flag == false) {
-					for(int index = 0; index < 8; index++) {
+					for(int index = 0; index < 8; index++) { //Cycles for all valid emotes
 						int idPointer = 31+index;
 						String emoteId = "U+"+idPointer+"U+fe0fU+20e3";
 						if(event.getReactionEmote().getAsCodepoints().equals(emoteId) && Main.table[0].getPlayingUsers().get(index).getUser() == null) {

@@ -1,22 +1,15 @@
 package pokerbot;
 
-import java.util.*;
-
 import javax.security.auth.login.LoginException;
-
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.*;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 
-public class Main extends ListenerAdapter {
+public class Main {
 	
-	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.fo-yP5EAkgc3XhT7-DP059qS4lU";
-    public int games = 0;
+	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.vXupZc7jVz-ukE3DCFZyaBpAIN8";
+    public static int games = 0;
     public static String gameMessageId = "";
     
     public static Table[] table = new Table[1];
@@ -32,45 +25,11 @@ public class Main extends ListenerAdapter {
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB); //Setting bot status to do not disturb
         builder.setActivity(Activity.playing("!host"));
         builder.setToken(token); //Attaching token of bot to object
-        builder.addEventListeners(new Main()); // Adding event listeners
+        builder.addEventListeners(new MessageListener()); // Adding event listeners
         builder.addEventListeners(new ReactionListener()); 
         builder.addEventListeners(new RemoveReactionListener());
-        builder.build(); // building object
+        builder.build(); // building JDA
         
 
-	}
-	
-	@Override
-	public void onMessageReceived(MessageReceivedEvent event) {
-		System.out.println(event.getAuthor().getName() + " in " + event.getChannel() + ": " + event.getMessage().getContentRaw());
-        String message = event.getMessage().getContentRaw();
-        String words[] = message.split("\\s+"); //When a message is recieved, it is split by words
-
-        	//Printing the words of the message in the console
-        for (int i = 0; i < words.length; i++) {
-            System.out.println(words[i]);
-        }
-        
-        if(words[0].equals("!host")) {
-            if(games < 1) {
-                event.getChannel().sendMessage("@everyone, A poker table has opened, come take a seat:").queue();
-                games++;
-            } else {
-                event.getChannel().sendMessage("There is a current game playing").queue();
-            }
-        }
-
-        if(event.getAuthor().isBot() && words[0].equals("@everyone,")) {
-            gameMessageId = event.getMessageId();
-            System.out.println(gameMessageId);
-            event.getMessage().addReaction("U+31U+fe0fU+20e3").queue(); //Command to add a reaction to the message in discord
-            event.getMessage().addReaction("U+32U+fe0fU+20e3").queue();
-            event.getMessage().addReaction("U+33U+fe0fU+20e3").queue();
-            event.getMessage().addReaction("U+34U+fe0fU+20e3").queue();
-            event.getMessage().addReaction("U+35U+fe0fU+20e3").queue();
-            event.getMessage().addReaction("U+36U+fe0fU+20e3").queue();
-            event.getMessage().addReaction("U+37U+fe0fU+20e3").queue();
-            event.getMessage().addReaction("U+38U+fe0fU+20e3").queue();
-        }
 	}
 }
