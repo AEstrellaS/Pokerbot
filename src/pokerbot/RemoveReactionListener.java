@@ -6,9 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class RemoveReactionListener extends ListenerAdapter{
 	public static boolean isBot = false;
 	public void onMessageReactionRemove(MessageReactionRemoveEvent event) {// Tests if event is made by user or by a bot and tests if event happens on the main message sent by the bot
-		System.out.println(Main.gameMessageId);
-		System.out.println(event.getMessageId());
-		if(event.getUser().isBot() == false && isBot == false && Main.gameMessageId.equals(event.getMessageId())) {
+		if(event.getUser().isBot() == false && isBot == false && Main.table[0].getTableMessageID().equals(event.getMessageId())) {
 			for(int index = 0; index < 8; index++) {//Loops around every index position of playingUsers and sees if it matches with the reaction emote
 				int idPointer = 31+index;
 				String emoteId = "U+"+idPointer+"U+fe0fU+20e3";

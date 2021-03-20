@@ -24,7 +24,7 @@ public class MessageListener extends ListenerAdapter{
         }
 
         if(event.getAuthor().isBot() && words[0].equals("@everyone,")) {
-            Main.gameMessageId = event.getMessageId();
+            Main.table[0].setTableMessageID(event.getMessageId());
             event.getMessage().addReaction("U+31U+fe0fU+20e3").queue(); //Command to add a reaction to the message in discord
             event.getMessage().addReaction("U+32U+fe0fU+20e3").queue();
             event.getMessage().addReaction("U+33U+fe0fU+20e3").queue();

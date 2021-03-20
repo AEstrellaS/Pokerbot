@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class ReactionListener extends ListenerAdapter{
 	public void onMessageReactionAdd(MessageReactionAddEvent event) {
-		if(event.getMember().getUser().isBot() == false && event.getMessageId().equals(Main.gameMessageId)) { //Test if author of the event is a bot (non-human) and tests if the messageId of the event equals the messageId of the hosting message
+		if(event.getMember().getUser().isBot() == false && Main.table[0].getTableMessageID().equals(event.getMessageId())) { //Test if author of the event is a bot (non-human) and tests if the messageId of the event equals the messageId of the hosting message
 			//Tests if the player reacts with 1 of the 8 allowed reactions
 			if(event.getReactionEmote().getAsCodepoints().equals("U+31U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+32U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+33U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+34U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+35U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+36U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+37U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+38U+fe0fU+20e3")) {
 				boolean flag = false;

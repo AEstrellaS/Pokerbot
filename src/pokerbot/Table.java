@@ -10,6 +10,7 @@ public class Table {
 	private int pot;
 	private ArrayList<Card> table = new ArrayList<Card>();
 	private ArrayList<Player> playingUsers = new ArrayList<Player>();
+	private String tableMessageID;
     
 	public void generatePlayingUsers() {
 		for(int index = 0; index < 9; index++) {
@@ -60,7 +61,16 @@ public class Table {
 	public ArrayList<Player> getPlayingUsers() {
 		return playingUsers;
 	}
+	
 	public ArrayList<Card> getHand() { //Function that returns the table's hand
 		return table;
+	}
+	
+	public String getTableMessageID() { //returns table message ID
+		return tableMessageID;
+	}
+	
+	public void setTableMessageID(String tableMessageID) { //sets table message ID
+		this.tableMessageID = tableMessageID;
 	}
 }
