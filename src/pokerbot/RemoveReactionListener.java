@@ -11,7 +11,7 @@ public class RemoveReactionListener extends ListenerAdapter{
 				int idPointer = 31+index;
 				String emoteId = "U+"+idPointer+"U+fe0fU+20e3";
 				if(event.getReactionEmote().getAsCodepoints().equals(emoteId)) {
-					Main.playingUsers[index].setUser(event.getMember().getUser());
+					Main.table[0].getPlayingUsers().get(index).setUser(null);
 					
 					event.getMember().getUser().openPrivateChannel().queue(privateChannel -> { //Sends a direct message to the player
                         privateChannel.sendMessage("You left the table!").queue();

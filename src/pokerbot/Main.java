@@ -15,16 +15,18 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class Main extends ListenerAdapter {
 	
-	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.i4xkIJBuvzuY5RxGxL8enP2equo";
+	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.fo-yP5EAkgc3XhT7-DP059qS4lU";
     public int games = 0;
     public static String gameMessageId = "";
-    public static Player[] playingUsers = new Player[8];
+    
+    public static Table[] table = new Table[1];
     
 	public static void main(String[] args) throws LoginException {
 		// TODO Auto-generated method stub
-		for(int index = 0; index < 8; index++) {
-			playingUsers[index] = new Player("",0);
-		}
+		
+		table[0] = new Table();
+		table[0].generatePlayingUsers();
+		
 		JDABuilder builder = JDABuilder.createDefault(token); //creating new object
 		builder.enableIntents(GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGES); // Setting gateway intents
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB); //Setting bot status to do not disturb
@@ -35,7 +37,7 @@ public class Main extends ListenerAdapter {
         builder.addEventListeners(new RemoveReactionListener());
         builder.build(); // building object
         
-		fixedProcedure();
+
 	}
 	
 	@Override
@@ -70,31 +72,5 @@ public class Main extends ListenerAdapter {
             event.getMessage().addReaction("U+37U+fe0fU+20e3").queue();
             event.getMessage().addReaction("U+38U+fe0fU+20e3").queue();
         }
-	}
-	
-	private static void fixedProcedure() {
-		Deck deck = new Deck();
-		Player player = new Player("alvaro", 500);
-		Table table = new Table();
-		table.fixCards(deck);
-		player.fixCards();
-		player.printHand();
-		table.printTable();
-		player.handRating(table);
-	}
-	
-	private static void procedure() {
-		Deck deck = new Deck();
-		Player player = new Player("alvaro", 500);
-		Table table = new Table();
-		deck.create();
-		deck.shuffle();
-		player.deliverHand(deck);
-		player.printHand();
-		table.deliverFlop(deck);
-		table.deliverRiver(deck);
-		table.deliverTurn(deck);
-		table.printTable();
-		player.handRating(table);
 	}
 }

@@ -9,9 +9,13 @@ public class Table {
 	//Declaration of instance variables
 	private int pot;
 	private ArrayList<Card> table = new ArrayList<Card>();
-	private ArrayList<User> playingUsers = new ArrayList<User>();
+	private ArrayList<Player> playingUsers = new ArrayList<Player>();
     
-	
+	public void generatePlayingUsers() {
+		for(int index = 0; index < 9; index++) {
+			playingUsers.add(new Player(null, 0));
+		}
+	}
 	public ArrayList<Card> deliverFlop(Deck deck) { //Function to deliver the flop (the first 3 cards)
 		table.add(deck.deliverCard());
 		table.add(deck.deliverCard());
@@ -53,7 +57,7 @@ public class Table {
 		System.out.println(table);
 	}
 	
-	public ArrayList<User> getPlayingUsers() {
+	public ArrayList<Player> getPlayingUsers() {
 		return playingUsers;
 	}
 	public ArrayList<Card> getHand() { //Function that returns the table's hand
