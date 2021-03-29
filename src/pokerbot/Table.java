@@ -3,14 +3,16 @@ package pokerbot;
 import java.util.*;
 
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.internal.requests.Route.Users;
 
 public class Table {
 	
 	//Declaration of instance variables
 	private int pot;
+	int seatingUsers = 0;
 	private ArrayList<Card> table = new ArrayList<Card>();
 	private ArrayList<Player> playingUsers = new ArrayList<Player>();
-	private String tableMessageID;
+	private String tableMessageID = "";
     
 	public void generatePlayingUsers() {
 		for(int index = 0; index < 9; index++) {
@@ -72,5 +74,14 @@ public class Table {
 	
 	public void setTableMessageID(String tableMessageID) { //sets table message ID
 		this.tableMessageID = tableMessageID;
+	}
+	
+	public void nextCycle() {
+
+		for(int index = 0; index < 9; index++) {
+			if(playingUsers.get(index).getUser().getId() != null) {
+				seatingUsers++;
+			}
+		}
 	}
 }

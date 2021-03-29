@@ -14,6 +14,7 @@ public class Player {
 	private boolean isDealer;
 	private boolean isFolded;
 
+	//Hand ratings
 	private int handRating; // 0 if nothing or/high card, 1 one pair, 2 two pair, 3 three of a kind, 4 straight, 5 flush, 6 full house, 7 four of a kind, 8 straight flush, 9 royal flush
 	private int highestCard; //The highest card in the hand or in the table is set as the int
 	private int firstPair = 0; //Pair value is set as the int
@@ -25,6 +26,15 @@ public class Player {
 	private int fourOfAKind = 0; //Quadruplet value is set as the int
 	private boolean straightFlush = false; //If user has a straight and a flush boolean is set to true
 	private boolean royalFlush = false;
+
+	//Positions in table
+	private int positionInTable = -1; //Sitting out, or not in a table, -1
+	//Big blind (bb) pos 0 in arrayList
+	//Small blind (sb) pos 1 in arrayList
+	//Button/Dealer (btn) pos 2 in arrayList
+	//Cut-off (CO) pos 3 in arrayList
+	//middle (md) pos 4-5 in arrayList
+	//under the gun (UTG) pos 6-8 in arrayList
 
 	//Constructor, sets user and initial chips
 	public Player(User user, int chips) {
@@ -191,7 +201,7 @@ public class Player {
 		ArrayList<Integer> ptHandSuit = new ArrayList<>(); //Player and table hand, max 7 suit values
 		ptHandSuit.add(hand.get(0).getSuitValue()); 
 		ptHandSuit.add(hand.get(1).getSuitValue());
-		
+
 		for(int index = 0; index < table.getHand().size(); index++) { //Adds the card value in the table to player-table hand value array
 			ptHandValue.add(table.getHand().get(index).getValue());
 		}
@@ -200,7 +210,7 @@ public class Player {
 			ptHandSuit.add(table.getHand().get(index).getSuitValue());
 		}
 
-		
+
 		for(int index1 = 0; index1 < 7; index1++) { //Orders cards based on the lowest to highest numerical suit value, along with the card value in a separate arrayList
 			for(int index2 = 0; index2 <6; index2++) {
 				if(ptHandSuit.get(index2) >= ptHandSuit.get(index2+1)) {
@@ -209,14 +219,14 @@ public class Player {
 				}
 			}
 		}
-		
+
 		System.out.println(ptHandValue);
 		System.out.println(ptHandSuit);
-		
+
 		for(int index1 = 0; index1 < 4; index1++) {
-			
+
 			int count = 0;
-			
+
 			for(int index2 = 0; index2 < ptHandSuit.size(); index2++) { //Testing if there are 5 or more cards with the same suit value
 				if(ptHandSuit.get(index1) == ptHandSuit.get(index2) && ptHandSuit.get(index1) != 0) {
 					count++;
@@ -228,7 +238,7 @@ public class Player {
 						ptHandSuit.set(index2, 0); //Setting index2 to 0
 					}
 				}
-				
+
 				for(int index2 = 0; index2 < 7; index2++) { //Sets the suit value to the left and the 0 to the right of the arrayList
 					for(int index3 = 0; index3 <6; index3++) {
 						if(ptHandSuit.get(index3) <= ptHandSuit.get(index3+1)) {
@@ -312,12 +322,27 @@ public class Player {
 	public int getHighestCard() { //Function to return the highest card
 		return highestCard;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public int getPositionInTable() {
+		return positionInTable;
+	}
+	
+	public void setPositionInTable(int positionInTable) {
+		this.positionInTable = positionInTable;
+	}
+	
+	public void nextSeat() {
+		positionInTable++;
+		if(positionInTable == 9) {
+			positionInTable = 0;
+		}
 	}
 }
