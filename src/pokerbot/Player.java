@@ -340,9 +340,5 @@ public class Player {
 	}
 	
 	public void nextSeat() {
-		positionInTable++;
-		if(positionInTable == 9) {
-			positionInTable = 0;
-		}
 	}
 }

@@ -9,14 +9,20 @@ public class Table {
 	
 	//Declaration of instance variables
 	private int pot;
-	int seatingUsers = 0;
+	int usersInHand = 0;
 	private ArrayList<Card> table = new ArrayList<Card>();
-	private ArrayList<Player> playingUsers = new ArrayList<Player>();
+	private ArrayList<Player> playingUsers = new ArrayList<Player>(); //Users playing the hand
+	private ArrayList<Player> seatingUsers = new ArrayList<Player>(); //Users in table
 	private String tableMessageID = "";
+	
+    private int dealerPos = -1; //Stores the current dealer position
+    private int sbPos = 0; //Stores the small blind position
+    private int bbPos = 1; //Stores the big blind position
     
-	public void generatePlayingUsers() {
+    
+	public void generateSeatingUsers() {
 		for(int index = 0; index < 9; index++) {
-			playingUsers.add(new Player(null, 0));
+			seatingUsers.add(new Player(null, 0));
 		}
 	}
 	public ArrayList<Card> deliverFlop(Deck deck) { //Function to deliver the flop (the first 3 cards)
@@ -60,8 +66,8 @@ public class Table {
 		System.out.println(table);
 	}
 	
-	public ArrayList<Player> getPlayingUsers() {
-		return playingUsers;
+	public ArrayList<Player> getSeatingUsers() {
+		return seatingUsers;
 	}
 	
 	public ArrayList<Card> getHand() { //Function that returns the table's hand
@@ -79,9 +85,43 @@ public class Table {
 	public void nextCycle() {
 
 		for(int index = 0; index < 9; index++) {
-			if(playingUsers.get(index).getUser().getId() != null) {
-				seatingUsers++;
+			if(seatingUsers.get(index).getUser() != null) {//Add all users who are seating to PlayingUsers
+				usersInHand++;
+				playingUsers.add(seatingUsers.get(index));
 			}
 		}
+		
+		bbPos++;
+		
+		if(bbPos > playingUsers.size()-1) {
+			bbPos = 0;
+		}
+		
+		sbPos++;
+		
+		if(sbPos > playingUsers.size()-1) {
+			sbPos = 0;
+		}
+		
+		dealerPos++;
+		
+		if(dealerPos > playingUsers.size()-1) {
+			dealerPos = 0;
+		}
+		
+	}
+	
+	public void startRound() {
+		playingUsers.get(dealerPos).getUser().openPrivateChannel().queue(privateChannel -> {
+            privateChannel.sendMessage("You are the dealer!").queue();
+        });
+		
+		playingUsers.get(sbPos).getUser().openPrivateChannel().queue(privateChannel -> {
+            privateChannel.sendMessage("You are the small blind!").queue();
+        });
+		
+		playingUsers.get(bbPos).getUser().openPrivateChannel().queue(privateChannel -> {
+            privateChannel.sendMessage("You are the big blind!").queue();
+        });
 	}
 }

@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
 	
-	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.XFupUnkRM-At_MiLdTcMh7SjXq8";
+	static String token = "N/a";
     public static int games = 0;
     
     public static Table[] table = new Table[1];
@@ -17,7 +17,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		table[0] = new Table();
-		table[0].generatePlayingUsers();
+		table[0].generateSeatingUsers();
 		
 		JDABuilder builder = JDABuilder.createDefault(token); //creating new object
 		builder.enableIntents(GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGES); // Setting gateway intents
