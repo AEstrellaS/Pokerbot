@@ -48,6 +48,10 @@ public class Player {
 		return hand;
 	}
 
+	public void deliverCard(Deck deck) {
+		hand.add(deck.deliverCard());
+	}
+
 	public void resetHand() { //Function that removes all cards from the player's hand
 		hand.clear();
 		handRating = 0;
@@ -338,7 +342,26 @@ public class Player {
 	public void setPositionInTable(int positionInTable) {
 		this.positionInTable = positionInTable;
 	}
-	
-	public void nextSeat() {
+
+	public void sendHand() { //Sends the hand to the player via the discord API
+		user.openPrivateChannel().queue(privateChannel -> {
+			privateChannel.sendMessage("You have:").queue();
+            privateChannel.sendMessage(hand.get(0).toString()).queue();
+			privateChannel.sendMessage(hand.get(1).toString()).queue();
+        });
+	}
+
+	public void placeBet(int bet) {
+		if(chips != 0 && bet >= chips) {
+			chips = 0;
+		} else if (chips !=0) {
+			chips -= bet;
+		}
+	}
+
+	public void crf() { //Check raise or fold
+		user.openPrivateChannel().queue(privateChannel -> {
+            privateChannel.sendMessage("Check, Fold or Raise").queue();
+        });
 	}
 }

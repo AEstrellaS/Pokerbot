@@ -40,5 +40,11 @@ public class MessageListener extends ListenerAdapter{
 			event.getMessage().addReaction("U+37U+fe0fU+20e3").queue();
 			event.getMessage().addReaction("U+38U+fe0fU+20e3").queue();
 		}
+
+		if(event.getAuthor().isBot() && words[0].equals("Check,")) {
+			event.getMessage().addReaction("U+2705").queue();
+			event.getMessage().addReaction("U+274C").queue();
+			event.getMessage().addReaction("U+261D").queue();
+		}
 	}
 }

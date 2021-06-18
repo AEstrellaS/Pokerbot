@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/alvaro/eclipse-workspace/Pokerbot/JDA-4.2.0_168-withDependencies.jar"/>
+	<classpathentry kind="lib" path="JDA-4.2.0_168-withDependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

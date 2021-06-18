@@ -18,31 +18,35 @@ public class Table {
     private int dealerPos = -1; //Stores the current dealer position
     private int sbPos = 0; //Stores the small blind position
     private int bbPos = 1; //Stores the big blind position
-    
+
+	public int minimumBet = 20;
+
+    Deck deck = new Deck();
     
 	public void generateSeatingUsers() {
 		for(int index = 0; index < 9; index++) {
 			seatingUsers.add(new Player(null, 0));
 		}
 	}
-	public ArrayList<Card> deliverFlop(Deck deck) { //Function to deliver the flop (the first 3 cards)
+
+	private ArrayList<Card> deliverFlop() { //Function to deliver the flop (the first 3 cards)
 		table.add(deck.deliverCard());
 		table.add(deck.deliverCard());
 		table.add(deck.deliverCard());
 		return table;
 	}
 	
-	public ArrayList<Card> deliverTurn(Deck deck) { //Function to deliver the turn (the next card)
+	private ArrayList<Card> deliverTurn() { //Function to deliver the turn (the next card)
 		table.add(deck.deliverCard());
 		return table;
 	}
 	
-	public ArrayList<Card> deliverRiver(Deck deck) { //Function to deliver the river (the next card)
+	private ArrayList<Card> deliverRiver() { //Function to deliver the river (the next card)
 		table.add(deck.deliverCard());
 		return table;
 	}
 	
-	public ArrayList<Card> fixCards(Deck deck) {//Function to fix the cards in the table's hand (used to debug)
+	public ArrayList<Card> fixCards() {//Function to fix the cards in the table's hand (used to debug)
 		Card c1 = new Card(1, 5);
 		Card c2 = new Card(1, 1);
 		Card c3 = new Card(1, 12);
@@ -112,16 +116,46 @@ public class Table {
 	}
 	
 	public void startRound() {
+		deck.create();
+		deck.shuffle();
+
 		playingUsers.get(dealerPos).getUser().openPrivateChannel().queue(privateChannel -> {
             privateChannel.sendMessage("You are the dealer!").queue();
         });
 		
 		playingUsers.get(sbPos).getUser().openPrivateChannel().queue(privateChannel -> {
-            privateChannel.sendMessage("You are the small blind!").queue();
+            privateChannel.sendMessage("You are the small blind! You have paid a small blind of "+minimumBet/2+" chips.").queue();
         });
-		
+		playingUsers.get(sbPos).placeBet(minimumBet/2);
+		addToPot(minimumBet/2);
 		playingUsers.get(bbPos).getUser().openPrivateChannel().queue(privateChannel -> {
-            privateChannel.sendMessage("You are the big blind!").queue();
+            privateChannel.sendMessage("You are the big blind! You have paid a Big Blind of " +minimumBet+" chips.").queue();
         });
+		playingUsers.get(bbPos).placeBet(minimumBet);
+		addToPot(minimumBet/2);
+
+		for(int index=0; index < 2; index++) {
+			for(int index2=0; index2 < usersInHand; index2++) {
+				playingUsers.get(index2).deliverCard(deck);
+			}
+		}
+
+		for(int index=0; index < usersInHand; index++) {
+			playingUsers.get(index).sendHand();
+		}
+		
+		bettingPhase();
 	}
+
+	public void addToPot(int bet) {
+		pot += bet;
+	}
+
+	public void bettingPhase() {
+		for(int index2=0; index2 < usersInHand; index2++) {
+			playingUsers.get(index2).crf();
+		}
+	}
+
+
 }
