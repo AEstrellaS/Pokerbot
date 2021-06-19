@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
 	
-	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.yEJQ3RscozzGcU0hXn34LNqSFC0";
+	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.kkjDi5ODnBACYzSvAl6tmHZQODI";
     public static int games = 0;
     
     public static Table[] table = new Table[1];

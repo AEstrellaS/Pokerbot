@@ -2,6 +2,7 @@ package pokerbot;
 
 import java.util.*;
 
+import jdk.tools.jlink.internal.SymLinkResourcePoolEntry;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.requests.Route.Users;
 
@@ -14,12 +15,17 @@ public class Table {
 	private ArrayList<Player> playingUsers = new ArrayList<Player>(); //Users playing the hand
 	private ArrayList<Player> seatingUsers = new ArrayList<Player>(); //Users in table
 	private String tableMessageID = "";
+	private String cfrMessageID = "";
 	
     private int dealerPos = -1; //Stores the current dealer position
     private int sbPos = 0; //Stores the small blind position
     private int bbPos = 1; //Stores the big blind position
 
+	private final int TIME_PER_ACTION = 1; // Time in seconds
 	public int minimumBet = 20;
+	public int highestBet = 0;
+
+	public int decision; //See line 165
 
     Deck deck = new Deck();
     
@@ -147,15 +153,53 @@ public class Table {
 		bettingPhase();
 	}
 
-	public void addToPot(int bet) {
+	private void addToPot(int bet) {
 		pot += bet;
 	}
 
-	public void bettingPhase() {
-		for(int index2=0; index2 < usersInHand; index2++) {
-			playingUsers.get(index2).crf();
+	private void bettingPhase() {
+		for(int index=0; index < usersInHand; index++) {
+			playingUsers.get(index).cfr();
+			System.out.println("Heloo");
+			long initTime = System.currentTimeMillis();
+			decision = 0; //0 not picked, 1 check, 2 fold, 3 raise
+			System.out.println("here");
+			while(System.currentTimeMillis()-initTime < TIME_PER_ACTION*1000 && decision == 0) {
+				if(decision == 1) { //Check
+					playingUsers.get(index).getUser().openPrivateChannel().queue(privateChannel -> {
+						privateChannel.sendMessage("You have checked the table's maximum bet of: "+highestBet).queue();
+					});
+				} else if(decision == 2) { //Raise
+					playingUsers.get(index).getUser().openPrivateChannel().queue(privateChannel -> {
+						privateChannel.sendMessage("Raise (Please type the amount to raise): ").queue();
+					});
+				} else if(decision == 3) { //Fold
+					playingUsers.get(index).getUser().openPrivateChannel().queue(privateChannel -> {
+						privateChannel.sendMessage("You have folded.").queue();
+					});
+					playingUsers.get(index).fold();
+				}
+			}
+
+			if(System.currentTimeMillis()-initTime < TIME_PER_ACTION*1000 && decision == 0) {
+				playingUsers.get(index).fold();
+			}
 		}
 	}
 
+	public void setcfrMessageID(String cfrMessageID) {
+		this.cfrMessageID = cfrMessageID;
+	}
 
+	public String getcfrMessageID() {
+		return cfrMessageID;
+	}
+
+	public void setHighestBet(int highestBet) {
+		this.highestBet = highestBet;
+	}
+
+	public int getHighestBet() {
+		return highestBet;
+	}
 }

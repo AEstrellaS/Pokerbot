@@ -11,6 +11,7 @@ public class Player {
 	private ArrayList<Card> hand = new ArrayList<Card>(); //Player hand, only 2 cards
 
 	private int chips;
+	private int bet;
 	private boolean isDealer;
 	private boolean isFolded;
 
@@ -345,9 +346,7 @@ public class Player {
 
 	public void sendHand() { //Sends the hand to the player via the discord API
 		user.openPrivateChannel().queue(privateChannel -> {
-			privateChannel.sendMessage("You have:").queue();
-            privateChannel.sendMessage(hand.get(0).toString()).queue();
-			privateChannel.sendMessage(hand.get(1).toString()).queue();
+			privateChannel.sendMessage("Your Cards: " + hand.get(0).toString() +", "+ hand.get(1).toString()).queue();
         });
 	}
 
@@ -359,9 +358,17 @@ public class Player {
 		}
 	}
 
-	public void crf() { //Check raise or fold
+	public void cfr() { //Check raise or fold
 		user.openPrivateChannel().queue(privateChannel -> {
             privateChannel.sendMessage("Check, Fold or Raise").queue();
         });
+	}
+
+	public void setBet(int bet) {
+		this.bet = bet;
+	}
+
+	public int getBet() {
+		return bet;
 	}
 }

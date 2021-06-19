@@ -8,6 +8,7 @@ public class ReactionListener extends ListenerAdapter{
 	public void onMessageReactionAdd(MessageReactionAddEvent event) {
 		if(event.getMember().getUser().isBot() == false && Main.table[0].getTableMessageID().equals(event.getMessageId())) { //Test if author of the event is a bot (non-human) and tests if the messageId of the event equals the messageId of the hosting message
 			//Tests if the player reacts with 1 of the 8 allowed reactions
+			System.out.println("Hello");
 			if(event.getReactionEmote().getAsCodepoints().equals("U+31U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+32U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+33U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+34U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+35U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+36U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+37U+fe0fU+20e3") || event.getReactionEmote().getAsCodepoints().equals("U+38U+fe0fU+20e3")) {
 				boolean flag = false;
 				for(int index = 0; index < 8; index++) {
@@ -31,6 +32,14 @@ public class ReactionListener extends ListenerAdapter{
 						}
 					}
 				}
+			}
+		} else if(event.getMember().getUser().isBot() == false && Main.table[0].getcfrMessageID().equals(event.getMessageId())) {
+			if(event.getReactionEmote().getAsCodepoints().equals("U+2705")) {
+				Main.table[0].decision = 1; //Check
+			} else if(event.getReactionEmote().getAsCodepoints().equals("U+274C")) {
+				Main.table[0].decision = 2; //Fold
+			} else if(event.getReactionEmote().getAsCodepoints().equals("U+261D")) {
+				Main.table[0].decision = 3; //Raise
 			}
 		}
 	}
