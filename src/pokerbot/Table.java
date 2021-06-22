@@ -2,7 +2,6 @@ package pokerbot;
 
 import java.util.*;
 
-import jdk.tools.jlink.internal.SymLinkResourcePoolEntry;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.requests.Route.Users;
 
@@ -21,7 +20,7 @@ public class Table {
     private int sbPos = 0; //Stores the small blind position
     private int bbPos = 1; //Stores the big blind position
 
-	private final int TIME_PER_ACTION = 1; // Time in seconds
+	private final int TIME_PER_ACTION = 30; // Time in seconds
 	public int minimumBet = 20;
 	public int highestBet = 0;
 
@@ -149,39 +148,39 @@ public class Table {
 		for(int index=0; index < usersInHand; index++) {
 			playingUsers.get(index).sendHand();
 		}
-		
-		bettingPhase();
 	}
 
 	private void addToPot(int bet) {
 		pot += bet;
 	}
 
-	private void bettingPhase() {
+	public void bettingPhase() {
 		for(int index=0; index < usersInHand; index++) {
 			playingUsers.get(index).cfr();
-			System.out.println("Heloo");
 			long initTime = System.currentTimeMillis();
-			decision = 0; //0 not picked, 1 check, 2 fold, 3 raise
-			System.out.println("here");
-			while(System.currentTimeMillis()-initTime < TIME_PER_ACTION*1000 && decision == 0) {
-				if(decision == 1) { //Check
+			Main.decision = 0; //0 not picked, 1 check, 2 fold, 3 raise
+			boolean flag = true;
+			while(System.currentTimeMillis()-initTime < TIME_PER_ACTION*1000 && flag == true)  {
+				if(Main.decision == 1) { //Check
 					playingUsers.get(index).getUser().openPrivateChannel().queue(privateChannel -> {
 						privateChannel.sendMessage("You have checked the table's maximum bet of: "+highestBet).queue();
 					});
-				} else if(decision == 2) { //Raise
+					flag = false;
+				} else if(Main.decision == 2) { //Raise
 					playingUsers.get(index).getUser().openPrivateChannel().queue(privateChannel -> {
 						privateChannel.sendMessage("Raise (Please type the amount to raise): ").queue();
 					});
-				} else if(decision == 3) { //Fold
+					flag = false;
+				} else if(Main.decision == 3) { //Fold
 					playingUsers.get(index).getUser().openPrivateChannel().queue(privateChannel -> {
 						privateChannel.sendMessage("You have folded.").queue();
 					});
 					playingUsers.get(index).fold();
+					flag = false;
 				}
 			}
 
-			if(System.currentTimeMillis()-initTime < TIME_PER_ACTION*1000 && decision == 0) {
+			if(System.currentTimeMillis()-initTime < TIME_PER_ACTION*1000 && Main.decision == 0) {
 				playingUsers.get(index).fold();
 			}
 		}

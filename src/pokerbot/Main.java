@@ -8,10 +8,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
 	
-	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.kkjDi5ODnBACYzSvAl6tmHZQODI";
+	static String token = "NzQyODg1NTE1Nzc4NDU3Njgw.XzMoDQ.w1IDKs9Uspwh2i9TOGa7IBdZckE";
     public static int games = 0;
     
     public static Table[] table = new Table[1];
+    public static int decision = 0;
     
 	public static void main(String[] args) throws LoginException {
 		// TODO Auto-generated method stub

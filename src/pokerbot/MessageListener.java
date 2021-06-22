@@ -27,6 +27,11 @@ public class MessageListener extends ListenerAdapter{
 			event.getChannel().sendMessage("Game Force Started").queue();
 			Main.table[0].nextCycle();
 			Main.table[0].startRound();
+			new Thread(){
+				public void run(){
+					Main.table[0].bettingPhase();
+				}
+			}.start();
 		}
 
 		if(event.getAuthor().isBot() && words[0].equals("@everyone,")) {
@@ -40,9 +45,8 @@ public class MessageListener extends ListenerAdapter{
 			event.getMessage().addReaction("U+37U+fe0fU+20e3").queue();
 			event.getMessage().addReaction("U+38U+fe0fU+20e3").queue();
 		}
-		System.out.println("This first");
+		
 		if(event.getAuthor().isBot() && words[0].equals("Check,")) {
-			System.out.println("This second");
 			Main.table[0].setcfrMessageID(event.getMessageId());
 			event.getMessage().addReaction("U+2705").queue();
 			event.getMessage().addReaction("U+274C").queue();
